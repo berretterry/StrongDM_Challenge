@@ -12,5 +12,8 @@ resource "aws_db_instance" "sdm_database" {
   vpc_security_group_ids = [aws_security_group.db_sg.id]
   db_subnet_group_name = aws_db_subnet_group.data_tier_subnet_group.name
 
+  #count = length(var.db_subnet_cidr)
+  #db_subnet_group_name = element(aws_subnet.data_tier_subnet[*].name, count.index)
+
   skip_final_snapshot = true
 }

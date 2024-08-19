@@ -38,20 +38,21 @@ resource "aws_subnet" "app_tier_subnet" {
 
 ### Creating Data Tier Subnet
 resource "aws_subnet" "data_tier_subnet" {
+  count = length(var.db_subnet_cidr)
   vpc_id                  = aws_vpc.sdm_challenge_vpc.id
-  cidr_block              = var.db_subnet_cidr
-  availability_zone       = data.aws_availability_zones.available.names[0]
+  cidr_block              = element(var.db_subnet_cidr, count.index)
+  availability_zone       = element(var.aws_azs, count.index)
   map_public_ip_on_launch = false
 
 
   tags = {
-    Name = "Data Tier Private Subnet"
+    Name = "Data Tier Private Subnet ${count.index + 1}"
   }
 }
 
 resource "aws_db_subnet_group" "data_tier_subnet_group" {
   name = "data_tier_subnet_group"
-  subnet_ids = [aws_subnet.data_tier_subnet.id]
+  subnet_ids = [aws_subnet.data_tier_subnet[0].id, aws_subnet.data_tier_subnet[1].id]
 
   tags = {
     Name = "data teir subnet group"
@@ -130,6 +131,7 @@ resource "aws_route_table_association" "private_rt_asso_1" {
 
 ### Creating Private Route Table Associations
 resource "aws_route_table_association" "private_rt_asso_2" {
-  subnet_id      = aws_subnet.data_tier_subnet.id
+  count = length(var.db_subnet_cidr)
+  subnet_id      = element(aws_subnet.data_tier_subnet[*].id, count.index)
   route_table_id = aws_default_route_table.default_rt.id
 }

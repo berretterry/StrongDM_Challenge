@@ -1,7 +1,7 @@
 ###Web Server
 resource "aws_instance" "web_server" {
   instance_type = "t2.micro"
-  ami = "ami-04a81a99f5ec58529"
+  ami = "ami-0aff18ec83b712f05"
   subnet_id = aws_subnet.web_tier_subnet.id
   security_groups = [aws_security_group.ssh_sg.id]
   key_name = aws_key_pair.ssh.key_name
@@ -19,7 +19,7 @@ resource "aws_instance" "web_server" {
 ###App Server
 resource "aws_instance" "app_server" {
   instance_type = "t2.micro"
-  ami = "ami-04a81a99f5ec58529"
+  ami = "ami-0aff18ec83b712f05"
   subnet_id = aws_subnet.app_tier_subnet.id
   security_groups = [aws_security_group.ssh_sg.id]
   key_name = aws_key_pair.ssh.key_name
@@ -35,7 +35,7 @@ resource "aws_instance" "app_server" {
 ###StrongDM Gateway
 resource "aws_instance" "sdmqw_server" {
   instance_type = "t2.medium"
-  ami = "ami-00ec582aa9f5c591f"
+  ami = "ami-05312be62d5121de5"
   subnet_id = aws_subnet.web_tier_subnet.id
   security_groups = [aws_security_group.ssh_sg.id]
   key_name = aws_key_pair.ssh.key_name
