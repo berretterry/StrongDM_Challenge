@@ -49,6 +49,15 @@ resource "aws_subnet" "data_tier_subnet" {
   }
 }
 
+resource "aws_db_subnet_group" "data_tier_subnet_group" {
+  name = "data_tier_subnet_group"
+  subnet_ids = [aws_subnet.data_tier_subnet.id]
+
+  tags = {
+    Name = "data teir subnet group"
+  }
+}
+
 ### Creating VPC Internet Gateway
 resource "aws_internet_gateway" "sdm_challenge_igw" {
   vpc_id = aws_vpc.sdm_challenge_vpc.id

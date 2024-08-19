@@ -23,12 +23,18 @@ variable "db_subnet_cidr" {
   default = "10.0.3.0/24"
 }
 
-variable "web_instance_type" {
-  type = string
-  default = "t2.micro"
+variable "mysql_username" {
+  default = "admin"
 }
 
-variable "app_instance_type" {
+variable "mysql_pass" {
+  default = "password"
+}
+
+variable "SDM_API_ACCESS_KEY" {
   type = string
-  default = "t2.micro"
+}
+
+variable "SDM_API_SECRET_KEY" {
+  type = string
 }
