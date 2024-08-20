@@ -1,6 +1,6 @@
 ### Creating StrongDM Gateway
 
-resource "sdm_node" "gateway" {
+resource "sdm_node" "bt_gateway" {
     gateway {
         name = "bt-gateway"
         listen_address = "${data.terraform_remote_state.infra.outputs.sdmgw_public_ip}:5000"
@@ -10,4 +10,16 @@ resource "sdm_node" "gateway" {
             owner = "Berret"
         }
     }
+}
+
+resource "sdm_node" "app_relay" {
+  relay {
+    name = "bt-app-relay"
+  }
+}
+
+resource "sdm_node" "db_relay" {
+  relay {
+    name = "bt-db-relay"
+  }
 }

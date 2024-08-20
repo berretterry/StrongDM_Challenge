@@ -10,3 +10,8 @@ resource "aws_key_pair" "ssh" {
   public_key = tls_private_key.ssh.public_key_openssh
 }
 
+resource "local_file" "access_key" {
+  content = tls_private_key.ssh.public_key_openssh
+  filename = "access_key.pem"
+}
+

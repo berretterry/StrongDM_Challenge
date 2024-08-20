@@ -29,9 +29,25 @@ variable "db_subnet_cidr" {
 }
 
 variable "mysql_username" {
-  default = "admin"
+  type = string
 }
 
 variable "mysql_pass" {
-  default = "password"
+  type = string
+}
+
+variable "server_ami" {
+  default = "ami-0aff18ec83b712f05"
+}
+
+variable "gateway_ami" {
+  default = "ami-05312be62d5121de5"
+}
+
+variable "server_type" {
+  default = "t2.micro"
+}
+
+variable "gateway_type" {
+  default = "t2.medium"
 }

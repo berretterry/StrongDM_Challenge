@@ -17,3 +17,4 @@ variable "SDM_API_ACCESS_KEY" {
 variable "SDM_API_SECRET_KEY" {
   type = string
 }
+

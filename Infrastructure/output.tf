@@ -45,3 +45,12 @@ output "mysql_pass" {
   sensitive = true
 }
 
+output "app_relay_private_ip" {
+  description = "app relay private ip"
+  value = aws_instance.app_relay.private_ip
+}
+
+output "db_relay_private_ip" {
+  description = "db relay private ip"
+  value = aws_instance.db_relay.private_ip
+}

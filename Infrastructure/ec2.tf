@@ -1,7 +1,7 @@
 ###Web Server
 resource "aws_instance" "web_server" {
-  instance_type = "t2.micro"
-  ami = "ami-0aff18ec83b712f05"
+  instance_type = var.server_type
+  ami = var.server_ami
   subnet_id = aws_subnet.web_tier_subnet.id
   security_groups = [aws_security_group.ssh_sg.id]
   key_name = aws_key_pair.ssh.key_name
@@ -11,17 +11,17 @@ resource "aws_instance" "web_server" {
     volume_size = "10"
   }
   tags = {
-    "Name" = "WebTier Instance"
+    "Name" = "Web Tier Instance"
   }
 }
 
 
 ###App Server
 resource "aws_instance" "app_server" {
-  instance_type = "t2.micro"
-  ami = "ami-0aff18ec83b712f05"
+  instance_type = var.server_type
+  ami = var.server_ami
   subnet_id = aws_subnet.app_tier_subnet.id
-  security_groups = [aws_security_group.ssh_sg.id]
+  security_groups = [aws_security_group.app_sg.id]
   key_name = aws_key_pair.ssh.key_name
   disable_api_termination = false
   ebs_optimized = false
@@ -34,10 +34,10 @@ resource "aws_instance" "app_server" {
 }
 ###StrongDM Gateway
 resource "aws_instance" "sdmqw_server" {
-  instance_type = "t2.medium"
-  ami = "ami-05312be62d5121de5"
+  instance_type = var.gateway_type
+  ami = var.gateway_ami
   subnet_id = aws_subnet.web_tier_subnet.id
-  security_groups = [aws_security_group.ssh_sg.id]
+  security_groups = [aws_security_group.sdmgw_sg.id]
   key_name = aws_key_pair.ssh.key_name
   disable_api_termination = false
   ebs_optimized = false
@@ -50,3 +50,35 @@ resource "aws_instance" "sdmqw_server" {
   user_data = file("${path.module}/userdata/sdm_userdata.sh")
 }
 
+###StrongDM Relays
+resource "aws_instance" "app_relay" {
+  instance_type = var.server_type
+  ami = var.server_ami
+  subnet_id = aws_subnet.app_tier_subnet.id
+  security_groups = [aws_security_group.ssh_sg.id]
+  key_name = aws_key_pair.ssh.key_name
+  disable_api_termination = false
+  ebs_optimized = false
+  root_block_device {
+    volume_size = "10"
+  }
+  tags = {
+    "Name" = "SDM App Relay Instance"
+  }
+}
+
+resource "aws_instance" "db_relay" {
+  instance_type = var.server_type
+  ami = var.server_ami
+  subnet_id = aws_subnet.data_tier_subnet[0].id
+  security_groups = [aws_security_group.ssh_sg.id]
+  key_name = aws_key_pair.ssh.key_name
+  disable_api_termination = false
+  ebs_optimized = false
+  root_block_device {
+    volume_size = "10"
+  }
+  tags = {
+    "Name" = "SDM DB Relay Instance"
+  }
+}
