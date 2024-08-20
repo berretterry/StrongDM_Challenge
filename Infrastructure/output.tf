@@ -30,15 +30,18 @@ output "sdmgw_public_ip" {
   value = aws_instance.web_server.public_ip
 }
 
-output "db_instance_endpoint" {
-  description = "RDS Instance Endpoint"
-  value = aws_db_instance.sdm_database.endpoint
+output "db_instance_address" {
+  description = "RDS Instance Address"
+  value = aws_db_instance.sdm_database.address
 }
 
-#StrongDM SSH public Key
-output "sdm_app_server_public_key" {
-  description = "StrongDM app-server public key"
-  value = sdm_resource.sdm_challenge_app_server.ssh[0].public_key
+output "mysql_username" {
+  value = var.mysql_username
+  sensitive = true
+}
+
+output "mysql_pass" {
+  value = var.mysql_pass
   sensitive = true
 }
 

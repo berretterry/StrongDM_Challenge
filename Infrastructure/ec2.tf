@@ -29,7 +29,7 @@ resource "aws_instance" "app_server" {
     volume_size = "10"
   }
   tags = {
-    "Name" = "WebTier Instance"
+    "Name" = "App Tier Instance"
   }
 }
 ###StrongDM Gateway
@@ -45,7 +45,7 @@ resource "aws_instance" "sdmqw_server" {
     volume_size = "10"
   }
   tags = {
-    "Name" = "WebTier Instance"
+    "Name" = "SDM GW Instance"
   }
   user_data = file("${path.module}/userdata/sdm_userdata.sh")
 }

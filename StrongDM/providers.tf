@@ -11,7 +11,7 @@ terraform {
   }
 
     backend "s3" {
-    bucket = "strongdm-challenge-backend-1"
+    bucket = "strongdm-challenge-backend-2"
       key = "strongdm-challenge/terraform.tfstate"
       region = "us-west-2"
     }

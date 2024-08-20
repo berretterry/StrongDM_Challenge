@@ -6,8 +6,8 @@ resource "aws_db_instance" "sdm_database" {
   engine_version = "5.7"
   instance_class = "db.t3.micro"
   identifier = "sdmdatabase"
-  username = "admin"
-  password = "password"
+  username = var.mysql_username
+  password = var.mysql_pass
 
   vpc_security_group_ids = [aws_security_group.db_sg.id]
   db_subnet_group_name = aws_db_subnet_group.data_tier_subnet_group.name

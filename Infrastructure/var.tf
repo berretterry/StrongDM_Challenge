@@ -35,11 +35,3 @@ variable "mysql_username" {
 variable "mysql_pass" {
   default = "password"
 }
-
-variable "SDM_API_ACCESS_KEY" {
-  type = string
-}
-
-variable "SDM_API_SECRET_KEY" {
-  type = string
-}
