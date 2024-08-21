@@ -27,7 +27,12 @@ output "web_private_ip" {
 
 output "sdmgw_public_ip" {
   description = "StrongDM Gateway Public IP"
-  value = aws_instance.web_server.public_ip
+  value = aws_instance.sdmqw_server.public_ip
+}
+
+output "jump_public_ip" {
+  description = "Jump Instance Public IP"
+  value = aws_instance.jump_server.public_ip
 }
 
 output "db_instance_address" {

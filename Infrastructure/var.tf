@@ -8,6 +8,10 @@ variable "aws_azs" {
   default = [ "us-west-2a", "us-west-2b" ]
 }
 
+variable "access_cidr" {
+  default = "24.20.142.72/32"
+}
+
 variable "vpc_cidr" {
   type = string
   default = "10.0.0.0/16"
