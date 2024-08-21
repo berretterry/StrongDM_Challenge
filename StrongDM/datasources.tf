@@ -1,7 +1,7 @@
 ### Creating StrongDM Datasources
 
 resource "sdm_resource" "bt_database" {
-  mysql {
+  maria {
     name = "bt_database"
     hostname = data.terraform_remote_state.infra.outputs.db_instance_address
     username = data.terraform_remote_state.infra.outputs.mysql_username

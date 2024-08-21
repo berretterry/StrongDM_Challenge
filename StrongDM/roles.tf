@@ -13,3 +13,8 @@ resource "sdm_role" "bt_role" {
     }
   ])
 }
+
+resource "sdm_account_attachment" "bt_role" {
+  account_id = "a-7e96b21066be4e2d"
+  role_id = sdm_role.bt_role.id
+}

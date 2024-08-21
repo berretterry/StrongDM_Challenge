@@ -13,14 +13,17 @@ output "sdm_app_server_public_key" {
 output "gateway_token" {
   description = "StrongDM Gateway Token"
   value = sdm_node.bt_gateway.gateway[0].token
+  sensitive = true
 }
 
-output "relay_token" {
+output "app_relay_token" {
   description = "StrongDM app server relay token"
   value = sdm_node.app_relay.relay[0].token
+  sensitive = true
 }
 
-output "relay_token" {
+output "db_relay_token" {
   description = "StrongDM database relay token"
   value = sdm_node.db_relay.relay[0].token
+  sensitive = true
 }
