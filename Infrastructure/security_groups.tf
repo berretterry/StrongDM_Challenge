@@ -44,9 +44,17 @@ resource "aws_vpc_security_group_egress_rule" "web_egress" {
   ip_protocol    = "-1"
 }
 
-resource "aws_vpc_security_group_ingress_rule" "web_ssh" {
+resource "aws_vpc_security_group_ingress_rule" "gw_to_web_ssh" {
   security_group_id = aws_security_group.web_sg.id
   referenced_security_group_id = aws_security_group.sdmgw_sg.id
+  from_port = 22
+  ip_protocol = "tcp"
+  to_port = 22
+}
+
+resource "aws_vpc_security_group_ingress_rule" "jump_to_web_ssh" {
+  security_group_id = aws_security_group.web_sg.id
+  referenced_security_group_id = aws_security_group.jump_sg.id
   from_port = 22
   ip_protocol = "tcp"
   to_port = 22
@@ -79,7 +87,7 @@ resource "aws_vpc_security_group_egress_rule" "app_egress" {
   ip_protocol    = "-1"
 }
 
-resource "aws_vpc_security_group_ingress_rule" "jump_ssh" {
+resource "aws_vpc_security_group_ingress_rule" "jump_to_app_ssh" {
   security_group_id = aws_security_group.app_sg.id
   referenced_security_group_id = aws_security_group.jump_sg.id
   from_port = 22
@@ -87,7 +95,7 @@ resource "aws_vpc_security_group_ingress_rule" "jump_ssh" {
   to_port = 22
 }
 
-resource "aws_vpc_security_group_ingress_rule" "app_ssh" {
+resource "aws_vpc_security_group_ingress_rule" "rely_to_app_ssh" {
   security_group_id = aws_security_group.app_sg.id
   referenced_security_group_id = aws_security_group.app_relay_sg.id
   from_port = 22
@@ -95,7 +103,7 @@ resource "aws_vpc_security_group_ingress_rule" "app_ssh" {
   to_port = 22
 }
 
-resource "aws_vpc_security_group_ingress_rule" "app_web" {
+resource "aws_vpc_security_group_ingress_rule" "web_to_app_web" {
   security_group_id = aws_security_group.app_sg.id
   referenced_security_group_id = aws_security_group.web_sg.id
   from_port = 80
@@ -122,7 +130,7 @@ resource "aws_vpc_security_group_egress_rule" "sdmgw_egress" {
   ip_protocol    = "-1"
 }
 
-resource "aws_vpc_security_group_ingress_rule" "sdmgw_ssh" {
+resource "aws_vpc_security_group_ingress_rule" "jump_to_sdmgw_ssh" {
   security_group_id = aws_security_group.sdmgw_sg.id
   referenced_security_group_id = aws_security_group.jump_sg.id
   from_port = 22
@@ -157,7 +165,7 @@ resource "aws_vpc_security_group_egress_rule" "db_egress" {
   ip_protocol    = "-1"
 }
 
-resource "aws_vpc_security_group_ingress_rule" "db_app_web" {
+resource "aws_vpc_security_group_ingress_rule" "app_to_db_web" {
   security_group_id = aws_security_group.db_sg.id
   referenced_security_group_id = aws_security_group.app_sg.id
   from_port = 80
@@ -165,7 +173,7 @@ resource "aws_vpc_security_group_ingress_rule" "db_app_web" {
   to_port = 80
 }
 
-resource "aws_vpc_security_group_ingress_rule" "db_app" {
+resource "aws_vpc_security_group_ingress_rule" "app_to_db_mysql" {
   security_group_id = aws_security_group.db_sg.id
   referenced_security_group_id = aws_security_group.app_sg.id
   from_port = 3306
@@ -173,20 +181,12 @@ resource "aws_vpc_security_group_ingress_rule" "db_app" {
   to_port = 3306
 }
 
-resource "aws_vpc_security_group_ingress_rule" "db_relay" {
+resource "aws_vpc_security_group_ingress_rule" "mysql_relay_to_db" {
   security_group_id = aws_security_group.db_sg.id
   cidr_ipv4 = aws_security_group.db_relay_sg.id
   from_port = 3306
   ip_protocol = "tcp"
   to_port = 3306
-}
-
-resource "aws_vpc_security_group_ingress_rule" "db_ssh" {
-  security_group_id = aws_security_group.db_sg.id
-  referenced_security_group_id = aws_security_group.jump_sg.id
-  from_port = 22
-  ip_protocol = "tcp"
-  to_port = 22
 }
 
 ### Creating Security Group for App Relay
