@@ -55,7 +55,7 @@ resource "aws_instance" "app_relay" {
   instance_type = var.server_type
   ami = var.gateway_ami
   subnet_id = aws_subnet.app_tier_subnet.id
-  security_groups = [aws_security_group.app_sg.id]
+  security_groups = [aws_security_group.app_relay_sg.id]
   key_name = aws_key_pair.ssh.key_name
   disable_api_termination = false
   ebs_optimized = false
@@ -72,7 +72,7 @@ resource "aws_instance" "db_relay" {
   instance_type = var.server_type
   ami = var.gateway_ami
   subnet_id = aws_subnet.data_tier_subnet[0].id
-  security_groups = [aws_security_group.db_sg.id]
+  security_groups = [aws_security_group.db_relay_sg.id]
   key_name = aws_key_pair.ssh.key_name
   disable_api_termination = false
   ebs_optimized = false
