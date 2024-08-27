@@ -183,7 +183,7 @@ resource "aws_vpc_security_group_ingress_rule" "app_to_db_mysql" {
 
 resource "aws_vpc_security_group_ingress_rule" "mysql_relay_to_db" {
   security_group_id = aws_security_group.db_sg.id
-  cidr_ipv4 = aws_security_group.db_relay_sg.id
+  referenced_security_group_id = aws_security_group.db_relay_sg.id
   from_port = 3306
   ip_protocol = "tcp"
   to_port = 3306
