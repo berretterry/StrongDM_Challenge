@@ -9,7 +9,7 @@ variable "aws_azs" {
 }
 
 variable "access_cidr" {
-  default = "24.20.142.72/32"
+  type = string
 }
 
 variable "vpc_cidr" {
